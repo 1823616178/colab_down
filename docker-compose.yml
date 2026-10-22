@@ -1,0 +1,19 @@
+# Colab Download Manager 一键部署
+# 前提：.env 已按 .env.example 配好（MySQL 地址/密钥等）；MySQL 用的是外部实例，不在本编排内
+services:
+  app:
+    build: .
+    image: colab-down:latest
+    container_name: colab-down
+    env_file: .env
+    environment:
+      # 生产服务器监听地址（容器内必须 0.0.0.0；端口与下方 ports 映射保持一致）
+      NITRO_HOST: 0.0.0.0
+      NITRO_PORT: 32023
+    ports:
+      - "32023:32023"
+    volumes:
+      # 可选：宿主机 rclone 挂载点（GOOGLE_DRIVE_MOUNT.md），供「浏览 Drive / 配额」直读
+      # 与 .env 的 NUXT_CDM_LOCAL_DRIVE_ROOT 保持一致；不挂载则注释掉，自动回退 VM 探测
+      - /backup/gdrive:/backup/gdrive:ro
+    restart: unless-stopped

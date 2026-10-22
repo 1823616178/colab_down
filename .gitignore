@@ -1,0 +1,15 @@
+node_modules
+.nuxt
+.output
+.data
+logs
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+dist
+coverage
+*.tsbuildinfo
+.idea/
+.vscode/
